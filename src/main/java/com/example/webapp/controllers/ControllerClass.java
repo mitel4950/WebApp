@@ -1,11 +1,13 @@
 package com.example.webapp.controllers;
 
+import com.example.webapp.myClasses.LogIn;
+import com.example.webapp.myClasses.ResponseTransfer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 //@Controller
@@ -14,8 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ControllerClass {
 
     @GetMapping("hellow")
-    public String GetHellow(){
-        //FileSystemResource resource = new FileSystemResource(ControllerClass.class.getResource("/res/path/to/the/file/myFile.xsd").getPath());
+    public String GetHellow() throws Exception{
         return "hellow.html";
     }
 
@@ -24,4 +25,27 @@ public class ControllerClass {
         return "Поиск по id:" +id;
     }
 
+
+    //Типа обработчик ошибок, который работет только в этом классе
+    /*@ExceptionHandler()
+    public void handleExeption(){}*/
+
+    @PostMapping("auto")
+    public String auto(){
+        System.out.println("auto");
+        return "hellow.html";
+    }
+
+    @PostMapping("login")
+        public ResponseEntity logIn(@RequestBody LogIn LI){
+        System.out.println("Пользователь: "+LI.email+" "+LI.pasword);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    //@PostMapping("logout")
+    //@ResponseBody
+    //public ResponseTransfer logOut(@RequestBody LogIn LI){
+    //    System.out.println("Пользователь: "+LI.email+" "+LI.pasword);
+    //    return new ResponseTransfer("Ну, допустим, мяу. "+ LI.email);
+    //}
 }
