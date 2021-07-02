@@ -9,6 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 
 //@Controller
 @RestController
@@ -42,10 +46,33 @@ public class ControllerClass {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    //@PostMapping("logout")
-    //@ResponseBody
-    //public ResponseTransfer logOut(@RequestBody LogIn LI){
-    //    System.out.println("Пользователь: "+LI.email+" "+LI.pasword);
-    //    return new ResponseTransfer("Ну, допустим, мяу. "+ LI.email);
-    //}
+    @GetMapping("RequestHeader")
+    public  String funHeader(@RequestHeader("name") String name)
+    {
+        return name;
+    }
+
+    static  String res;
+    @GetMapping("listHeaders")
+    public ResponseEntity<String> listAllHeaders(@RequestHeader Map<String, String> headers) {
+        res = "";
+        headers.forEach((key, value) -> res += String.format("Header '%s' = %s \n", key, value));
+        return new ResponseEntity<String>(res, HttpStatus.OK);
+    }
+
+    @GetMapping("nonRequiredHeader")
+    public ResponseEntity<String> evaluateNonRequiredHeader(
+            @RequestHeader(value = "optional-header", required = false) String optionalHeader) {
+        return new ResponseEntity<String>(String.format(
+                "Was the optional header present? %s!",
+                (optionalHeader == null ? "No" : "Yes")),HttpStatus.OK);
+    }
+
+    @ResponseStatus(HttpStatus.I_AM_A_TEAPOT)
+    @GetMapping("default")
+    public ResponseEntity<String> evaluateDefaultHeaderValue(@RequestHeader(value = "optional-header", defaultValue = "3600") int optionalHeader) {
+        return new ResponseEntity<String>(String.format("Optional Header is %d", optionalHeader), HttpStatus.OK);
+    }
+
+
 }
