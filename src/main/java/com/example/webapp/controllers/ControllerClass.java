@@ -1,26 +1,19 @@
 package com.example.webapp.controllers;
 
 import com.example.webapp.myClasses.LogIn;
-import com.example.webapp.myClasses.ResponseTransfer;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 
-//@Controller
 @RestController
 @RequestMapping("/Request/")
 public class ControllerClass {
 
     @GetMapping("hellow")
-    public String GetHellow() throws Exception{
+    public String GetHellow(){
         return "hellow.html";
     }
 
@@ -57,7 +50,7 @@ public class ControllerClass {
     public ResponseEntity<String> listAllHeaders(@RequestHeader Map<String, String> headers) {
         res = "";
         headers.forEach((key, value) -> res += String.format("Header '%s' = %s \n", key, value));
-        return new ResponseEntity<String>(res, HttpStatus.OK);
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @GetMapping("nonRequiredHeader")
@@ -71,8 +64,10 @@ public class ControllerClass {
     @ResponseStatus(HttpStatus.I_AM_A_TEAPOT)
     @GetMapping("default")
     public ResponseEntity<String> evaluateDefaultHeaderValue(@RequestHeader(value = "optional-header", defaultValue = "3600") int optionalHeader) {
-        return new ResponseEntity<String>(String.format("Optional Header is %d", optionalHeader), HttpStatus.OK);
+        return new ResponseEntity<>(String.format("Optional Header is %d", optionalHeader), HttpStatus.OK);
     }
+
+
 
 
 }

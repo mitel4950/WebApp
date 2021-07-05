@@ -26,16 +26,16 @@ public class NewController {
     }
 
     //Типа обробатываем ошибку, но чёт как-то... Мее. Такое себе
-    @GetMapping(value = "/{id}")
-    @ResponseBody
-    public String findById(@PathVariable("id") String strId, HttpServletResponse response){
-        try{
-            int id = Integer.valueOf(strId);
-            return id+"";
-        }catch(Exception e){
-            throw new ResponseStatusException(777, "!!!!! "+strId+"? Серьёзно? !!!!!", e);
-        }
-    }
+    //@GetMapping(value = "/{id}")
+    //@ResponseBody
+    //public String findById(@PathVariable("id") String strId, HttpServletResponse response){
+    //    try{
+    //        int id = Integer.valueOf(strId);
+    //        return id+"";
+    //    }catch(Exception e){
+    //        throw new ResponseStatusException(777, "!!!!! "+strId+"? Серьёзно? !!!!!", e);
+    //    }
+    //}
 
 
     @GetMapping("/ResponseEntity")
